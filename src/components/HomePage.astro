@@ -1,0 +1,177 @@
+---
+import type { Locale } from "../data/site";
+import { galleryImages, locales } from "../data/site";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = locales[lang];
+---
+
+<section class="hero">
+  <div class="hero-backdrop"></div>
+  <div class="shell hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">{content.hero.eyebrow}</p>
+      <h1>{content.hero.title}</h1>
+      <p class="hero-text">{content.hero.text}</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="tel:+36204102395">{content.hero.primaryCta}</a>
+        <a class="button button-secondary" href="#gallery">{content.hero.secondaryCta}</a>
+      </div>
+      <div class="hero-stats">
+        {content.hero.stats.map((stat) => (
+          <article>
+            <strong>{stat.value}</strong>
+            <span>{stat.label}</span>
+          </article>
+        ))}
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="visual-frame">
+        <img src="/images/image01.jpg" alt="Installed stainless steel chimney system" />
+      </div>
+      <aside class="trust-panel">
+        <h2>{content.trust.title}</h2>
+        <ul>
+          {content.trust.items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section about" id="about">
+  <div class="shell section-grid">
+    <div class="section-heading">
+      <p class="section-kicker">3P Kemeny</p>
+      <h2>{content.about.title}</h2>
+      <p>{content.about.lead}</p>
+    </div>
+    <div class="about-copy">
+      {content.about.body.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+      <div class="highlight-grid">
+        {content.about.highlights.map((item) => (
+          <article class="highlight-card">
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section services" id="services">
+  <div class="shell">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Scope</p>
+      <h2>{content.services.title}</h2>
+      <p>{content.services.intro}</p>
+    </div>
+    <div class="service-grid">
+      {content.services.items.map((service) => (
+        <article class="service-card">
+          <h3>{service.title}</h3>
+          <p>{service.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section references" id="references">
+  <div class="shell">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Track Record</p>
+      <h2>{content.references.title}</h2>
+      <p>{content.references.intro}</p>
+    </div>
+    <div class="reference-layout">
+      <article class="reference-panel">
+        <h3>{content.references.germany}</h3>
+        <ul class="reference-list">
+          {content.references.itemsGermany.map((item) => (
+            <li>
+              <span>{item.name}</span>
+              <strong>{item.type}</strong>
+            </li>
+          ))}
+        </ul>
+      </article>
+      <article class="reference-panel">
+        <h3>{content.references.hungary}</h3>
+        <ul class="reference-list">
+          {content.references.itemsHungary.map((item) => (
+            <li>
+              <span>{item.name}</span>
+              <strong>{item.type}</strong>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section gallery" id="gallery">
+  <div class="shell">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Project Photos</p>
+      <h2>{content.gallery.title}</h2>
+      <p>{content.gallery.intro}</p>
+    </div>
+    <div class="gallery-grid">
+      {galleryImages.map((image, index) => (
+        <a class="gallery-card" href={`/images/gallery/${image}`} target="_blank" rel="noreferrer">
+          <img src={`/images/gallery/${image}`} alt={`3P Kemeny project photo ${index + 1}`} loading="lazy" />
+          <span>{content.gallery.cta}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <div class="shell contact-layout">
+    <div class="section-heading">
+      <p class="section-kicker">Direct Contact</p>
+      <h2>{content.contact.title}</h2>
+      <p>{content.contact.intro}</p>
+      <div class="contact-stack">
+        <a class="contact-link" href="tel:+36204102395">
+          <span>{content.contact.phoneLabel}</span>
+          <strong>+36 20 410 2395</strong>
+        </a>
+        <div class="contact-link static">
+          <span>{content.contact.serviceAreaLabel}</span>
+          <strong>{content.contact.serviceAreaValue}</strong>
+        </div>
+        <div class="contact-link static">
+          <span>{content.contact.availabilityLabel}</span>
+          <strong>{content.contact.availabilityValue}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>{content.contact.cardTitle}</h3>
+      <p>{content.contact.cardText}</p>
+      <img src="/images/image03.jpg" alt="Reference installation detail" />
+      <div class="checklist">
+        <h4>{content.contact.checklistTitle}</h4>
+        <ul>
+          {content.contact.checklist.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

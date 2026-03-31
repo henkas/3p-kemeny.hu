@@ -1,0 +1,68 @@
+---
+import "../styles/global.css";
+import type { Locale } from "../data/site";
+import { locales, routes } from "../data/site";
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  canonicalPath: string;
+}
+
+const { lang, title, description, canonicalPath } = Astro.props;
+const locale = locales[lang];
+const canonicalUrl = new URL(canonicalPath, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl.toString()} />
+    {Object.entries(routes).map(([code, path]) => (
+      <link rel="alternate" hreflang={code} href={new URL(path, Astro.site).toString()} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL("/", Astro.site).toString()} />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href={routes[lang]}>
+          <span class="brand-mark">3P</span>
+          <span class="brand-text">
+            <strong>3P Kemeny</strong>
+            <small>Chimney installation</small>
+          </span>
+        </a>
+        <nav class="top-nav" aria-label="Primary">
+          <a href={`${routes[lang]}#about`}>{locale.nav.about}</a>
+          <a href={`${routes[lang]}#services`}>{locale.nav.services}</a>
+          <a href={`${routes[lang]}#references`}>{locale.nav.references}</a>
+          <a href={`${routes[lang]}#gallery`}>{locale.nav.gallery}</a>
+          <a href={`${routes[lang]}#contact`}>{locale.nav.contact}</a>
+        </nav>
+        <div class="language-switcher" aria-label={locale.switcherLabel}>
+          {Object.entries(routes).map(([code, path]) => (
+            <a class:list={["lang-link", code === lang && "is-active"]} href={path}>
+              {locales[code as Locale].localeLabel}
+            </a>
+          ))}
+        </div>
+      </div>
+    </header>
+    <main id="content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>© 2026 3P Kemeny. {locale.footer}</p>
+        <a href="tel:+36204102395">+36 20 410 2395</a>
+      </div>
+    </footer>
+  </body>
+</html>

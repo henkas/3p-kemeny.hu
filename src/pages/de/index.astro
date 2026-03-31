@@ -1,0 +1,14 @@
+---
+import HomePage from "../../components/HomePage.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { locales } from "../../data/site";
+---
+
+<BaseLayout
+  lang="de"
+  title={locales.de.pageTitle}
+  description={locales.de.metaDescription}
+  canonicalPath="/de/"
+>
+  <HomePage lang="de" />
+</BaseLayout>

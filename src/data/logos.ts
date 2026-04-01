@@ -27,7 +27,7 @@ export const trustBrandLogos: BrandLogo[] = [
   },
   {
     name: "Viessmann",
-    src: `${CDN}/viessmann-climatesolutions.com/w/603/h/286/logo?c=${CLIENT_ID}`,
+    src: "/images/logos/veissmann.png",
   },
   {
     name: "KfW Bank",

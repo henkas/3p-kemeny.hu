@@ -5,6 +5,7 @@ export type BrandLogo = {
   name: string;
   src: string;
   hoverSrc?: string;
+  circle?: boolean;
 };
 
 export const trustBrandLogos: BrandLogo[] = [
@@ -14,8 +15,8 @@ export const trustBrandLogos: BrandLogo[] = [
   },
   {
     name: "BMW",
-    src: `${CDN}/bmwusa.com/w/800/h/800/logo?c=${CLIENT_ID}`,
-    hoverSrc: `${CDN}/bmwusa.com/w/800/h/800/theme/light/logo?c=${CLIENT_ID}`,
+    src: `${CDN}/bmwusa.com/w/400/h/400?c=${CLIENT_ID}`,
+    circle: true,
   },
   {
     name: "Volkswagen",

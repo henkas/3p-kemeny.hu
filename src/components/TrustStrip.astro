@@ -22,16 +22,14 @@ const content = locales[lang];
       ))}
     </div>
     <div class="trust-strip-logos">
-      {trustBrandLogos.map((brand) =>
-        brand.hoverSrc ? (
-          <span class="trust-logo-swap">
-            <img class="trust-brand-logo default" src={brand.src} alt={brand.name} loading="lazy" />
-            <img class="trust-brand-logo hover" src={brand.hoverSrc} alt={brand.name} loading="lazy" />
-          </span>
-        ) : (
-          <img class="trust-brand-logo" src={brand.src} alt={brand.name} loading="lazy" />
-        )
-      )}
+      {trustBrandLogos.map((brand) => (
+        <img
+          class:list={["trust-brand-logo", brand.circle && "is-circle"]}
+          src={brand.src}
+          alt={brand.name}
+          loading="lazy"
+        />
+      ))}
     </div>
   </div>
 </div>

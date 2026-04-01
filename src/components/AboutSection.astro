@@ -1,0 +1,47 @@
+---
+import type { Locale } from "../data/site";
+import { locales } from "../data/site";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = locales[lang];
+---
+
+<section class="section about" id="about">
+  <div class="shell about-grid">
+    <div class="about-portrait">
+      <img
+        src="/images/portrait.jpg"
+        alt="Robert Papp — 3P Kemeny"
+        width="400"
+        height="533"
+      />
+    </div>
+    <div class="about-content">
+      <p class="section-kicker">3P Kemeny</p>
+      <h2>{content.about.title}</h2>
+      <p class="about-lead">{content.about.lead}</p>
+      <div class="about-body">
+        {content.about.body.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+      <ul class="trust-list">
+        {content.about.trustItems.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+      <div class="highlight-grid">
+        {content.about.highlights.map((item) => (
+          <article class="highlight-card">
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

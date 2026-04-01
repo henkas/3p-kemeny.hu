@@ -1,0 +1,40 @@
+---
+import type { Locale } from "../data/site";
+import { galleryImages, locales } from "../data/site";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = locales[lang];
+---
+
+<section class="section gallery" id="gallery">
+  <div class="shell">
+    <div class="section-heading narrow">
+      <p class="section-kicker">3P Kemeny</p>
+      <h2>{content.gallery.title}</h2>
+      <p>{content.gallery.intro}</p>
+    </div>
+    <div class="gallery-grid">
+      {galleryImages.map((image, index) => (
+        <a
+          class="gallery-card"
+          href={`/images/gallery/${image}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src={`/images/gallery/${image}`}
+            alt={`3P Kemeny project photo ${index + 1}`}
+            loading="lazy"
+            width="400"
+            height="400"
+          />
+          <span>{content.gallery.cta}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

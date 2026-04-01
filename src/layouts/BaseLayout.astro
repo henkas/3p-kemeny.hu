@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import type { Locale } from "../data/site";
-import { locales, routes } from "../data/site";
+import { contactInfo, locales, routes } from "../data/site";
 
 interface Props {
   lang: Locale;
@@ -33,11 +33,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site);
     <header class="site-header">
       <div class="shell header-inner">
         <a class="brand" href={routes[lang]}>
-          <span class="brand-mark">3P</span>
-          <span class="brand-text">
-            <strong>3P Kemeny</strong>
-            <small>Chimney installation</small>
-          </span>
+          <img class="brand-logo" src="/images/logo.png" alt="3P Kemeny logo" width="120" height="60" />
         </a>
         <nav class="top-nav" aria-label="Primary">
           <a href={`${routes[lang]}#about`}>{locale.nav.about}</a>
@@ -60,8 +56,11 @@ const canonicalUrl = new URL(canonicalPath, Astro.site);
     </main>
     <footer class="site-footer">
       <div class="shell footer-inner">
-        <p>© 2026 3P Kemeny. {locale.footer}</p>
-        <a href="tel:+36204102395">+36 20 410 2395</a>
+        <p>&copy; 2026 3P Kemeny. {locale.footer}</p>
+        <div style="display:flex;gap:1.5rem;">
+          <a href={contactInfo.phoneTel}>{contactInfo.phone}</a>
+          <a href={contactInfo.emailHref}>{contactInfo.email}</a>
+        </div>
       </div>
     </footer>
   </body>

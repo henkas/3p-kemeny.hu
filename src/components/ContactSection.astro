@@ -1,0 +1,43 @@
+---
+import type { Locale } from "../data/site";
+import { contactInfo, locales } from "../data/site";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = locales[lang];
+---
+
+<section class="section contact" id="contact">
+  <div class="shell contact-layout">
+    <div class="section-heading">
+      <p class="section-kicker">3P Kemeny</p>
+      <h2>{content.contact.title}</h2>
+      <p>{content.contact.intro}</p>
+      <div class="contact-stack">
+        <a class="contact-link" href={contactInfo.phoneTel}>
+          <span>{content.contact.phoneLabel}</span>
+          <strong>{contactInfo.phone}</strong>
+        </a>
+        <a class="contact-link" href={contactInfo.emailHref}>
+          <span>{content.contact.emailLabel}</span>
+          <strong>{contactInfo.email}</strong>
+        </a>
+        <div class="contact-link static">
+          <span>{content.contact.serviceAreaLabel}</span>
+          <strong>{content.contact.serviceAreaValue}</strong>
+        </div>
+        <div class="contact-link static">
+          <span>{content.contact.languagesLabel}</span>
+          <strong>{content.contact.languagesValue}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="contact-map">
+      <h3>3P Kemeny</h3>
+      <p>{content.contact.serviceAreaValue}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+---
+import type { Locale } from "../data/site";
+import { locales } from "../data/site";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = locales[lang];
+---
+
+<section class="section services" id="services">
+  <div class="shell">
+    <div class="section-heading narrow">
+      <p class="section-kicker">{content.services.coreLabel}</p>
+      <h2>{content.services.title}</h2>
+      <p>{content.services.intro}</p>
+    </div>
+    <div class="core-services">
+      {content.services.core.map((service) => (
+        <article class="service-card is-core">
+          <h3>{service.title}</h3>
+          <p>{service.text}</p>
+        </article>
+      ))}
+    </div>
+    <p class="additional-label">{content.services.additionalLabel}</p>
+    <div class="additional-services">
+      {content.services.additional.map((service) => (
+        <article class="service-card">
+          <h3>{service.title}</h3>
+          <p>{service.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

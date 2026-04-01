@@ -1,0 +1,57 @@
+---
+import type { Locale } from "../data/site";
+import { locales } from "../data/site";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = locales[lang];
+
+const allFeatured = [
+  ...content.references.itemsGermany,
+  ...content.references.itemsHungary,
+].filter((r) => r.featured);
+---
+
+<section class="section references" id="references">
+  <div class="shell">
+    <div class="section-heading narrow">
+      <p class="section-kicker">{content.references.featuredLabel}</p>
+      <h2>{content.references.title}</h2>
+      <p>{content.references.intro}</p>
+    </div>
+
+    <div class="featured-logos">
+      {allFeatured.map((ref) => (
+        <span class="featured-logo">{ref.name}</span>
+      ))}
+    </div>
+
+    <div class="reference-layout">
+      <article class="reference-panel">
+        <h3>{content.references.germany}</h3>
+        <ul class="reference-list">
+          {content.references.itemsGermany.map((item) => (
+            <li>
+              <span>{item.name}</span>
+              <strong>{item.type}</strong>
+            </li>
+          ))}
+        </ul>
+      </article>
+      <article class="reference-panel">
+        <h3>{content.references.hungary}</h3>
+        <ul class="reference-list">
+          {content.references.itemsHungary.map((item) => (
+            <li>
+              <span>{item.name}</span>
+              <strong>{item.type}</strong>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>

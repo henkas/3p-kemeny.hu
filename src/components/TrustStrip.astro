@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "../data/site";
-import { locales, trustLogos } from "../data/site";
+import { locales } from "../data/site";
+import { trustBrandLogos } from "../data/logos";
 
 interface Props {
   lang: Locale;
@@ -21,8 +22,13 @@ const content = locales[lang];
       ))}
     </div>
     <div class="trust-strip-logos">
-      {trustLogos.map((name) => (
-        <span class="trust-logo-name">{name}</span>
+      {trustBrandLogos.map((brand) => (
+        <img
+          class="trust-brand-logo"
+          src={brand.src}
+          alt={brand.name}
+          loading="lazy"
+        />
       ))}
     </div>
   </div>

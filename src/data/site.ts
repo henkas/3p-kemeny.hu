@@ -100,14 +100,6 @@ export const contactInfo = {
   emailHref: "mailto:info@3p-kemeny.hu",
 } as const;
 
-export const trustLogos = [
-  "Mercedes",
-  "BMW",
-  "VW",
-  "Airbus",
-  "Viessmann",
-] as const;
-
 export const galleryImages = [
   "gallery-01.jpg",
   "gallery-02.jpg",

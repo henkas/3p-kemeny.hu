@@ -326,12 +326,18 @@ h1 {
   gap: 1.5rem;
 }
 
-.trust-logo-name {
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.trust-brand-logo {
+  height: 1.6rem;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  transition: opacity 0.2s, filter 0.2s;
+}
+
+.trust-brand-logo:hover {
+  opacity: 0.8;
+  filter: grayscale(0%);
 }
 
 /* ── Sections (shared) ─────────────────────── */

@@ -786,7 +786,7 @@ h1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .contact-stack {
@@ -835,18 +835,18 @@ h1 {
 .contact-aside {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-}
-
-.contact-address {
   border-radius: var(--radius-lg);
   background: var(--panel);
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.contact-aside-text {
   padding: 1.75rem;
 }
 
-.contact-address h3 {
+.contact-aside-text h3 {
   margin: 0 0 0.75rem;
   font-size: 1.15rem;
 }
@@ -864,15 +864,15 @@ h1 {
   font-style: italic;
 }
 
-.contact-map-embed {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
+.contact-aside-map {
+  flex: 1;
+  min-height: 240px;
 }
 
-.contact-map-embed iframe {
+.contact-aside-map iframe {
   display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* ── Footer ────────────────────────────────── */

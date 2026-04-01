@@ -983,11 +983,19 @@ h1 {
 
   .top-nav {
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
   }
 
   .top-nav a {
     padding: 0.5rem 0;
+  }
+
+  .language-switcher {
+    justify-content: center;
+    gap: 2rem;
   }
 
   /* Center hero logo on mobile */

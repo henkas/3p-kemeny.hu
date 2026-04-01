@@ -131,7 +131,7 @@ export const locales: Record<Locale, LocaleContent> = {
       contact: "Kapcsolat",
     },
     hero: {
-      eyebrow: "3P Kémény • Ajka és környéke",
+      eyebrow: "Ajka és környéke",
       title: "Időtálló kéményrendszerek",
       text: "Ipari és lakossági kéményépítés, kéménybélelés és korszerűsítés — több mint 15 év gyakorlati tapasztalattal és németországi projektmúlttal.",
       primaryCta: "Ajánlatkérés",
@@ -314,7 +314,7 @@ export const locales: Record<Locale, LocaleContent> = {
       contact: "Contact",
     },
     hero: {
-      eyebrow: "3P Kémény • Ajka region, Hungary",
+      eyebrow: "Ajka region, Hungary",
       title: "Chimney systems built to last",
       text: "Industrial and residential chimney construction, relining and modernization — with 15+ years of hands-on experience and a German project background.",
       primaryCta: "Request a quote",
@@ -497,7 +497,7 @@ export const locales: Record<Locale, LocaleContent> = {
       contact: "Kontakt",
     },
     hero: {
-      eyebrow: "3P Kémény • Region Ajka, Ungarn",
+      eyebrow: "Region Ajka, Ungarn",
       title: "Schornsteinsysteme, auf die Sie langfristig zählen können",
       text: "Industrie- und Wohnbau-Schornsteinbau, Sanierung und Modernisierung — mit über 15 Jahren Praxiserfahrung und deutschem Projekthintergrund.",
       primaryCta: "Angebot anfordern",

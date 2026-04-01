@@ -236,6 +236,7 @@ h1, h2, h3, h4 {
 .hero-logo {
   height: 4rem;
   width: auto;
+  object-fit: contain;
 }
 
 .eyebrow {
@@ -666,6 +667,10 @@ h1 {
   overflow: hidden;
   border-radius: var(--radius);
   border: 1px solid var(--line);
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
 }
 
 .gallery-card img {
@@ -697,6 +702,79 @@ h1 {
 
 .gallery-card:hover span {
   opacity: 1;
+}
+
+/* ── Lightbox ──────────────────────────────── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.lightbox[aria-hidden="true"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  object-fit: contain;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: #fff;
+}
+
+.lightbox-close {
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.5rem;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.8rem;
+}
+
+.lightbox-prev {
+  left: 1.5rem;
+}
+
+.lightbox-next {
+  right: 1.5rem;
 }
 
 /* ── Contact ───────────────────────────────── */
@@ -754,23 +832,47 @@ h1 {
   font-family: "Inter", system-ui, sans-serif;
 }
 
-.contact-map {
+.contact-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contact-address {
   border-radius: var(--radius-lg);
   background: var(--panel);
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
-  padding: 2rem;
+  padding: 1.75rem;
 }
 
-.contact-map h3 {
-  margin: 0 0 0.5rem;
+.contact-address h3 {
+  margin: 0 0 0.75rem;
   font-size: 1.15rem;
 }
 
-.contact-map p {
-  margin: 0;
+.address-lines {
+  margin: 0 0 0.5rem;
   color: var(--text-soft);
   line-height: 1.6;
+}
+
+.address-disclaimer {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+.contact-map-embed {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-map-embed iframe {
+  display: block;
 }
 
 /* ── Footer ────────────────────────────────── */

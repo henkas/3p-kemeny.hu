@@ -85,6 +85,10 @@ export type LocaleContent = {
     responseTimeValue: string;
     languagesLabel: string;
     languagesValue: string;
+    addressLabel: string;
+    addressLine1: string;
+    addressLine2: string;
+    addressDisclaimer: string;
   };
   footer: string;
 };
@@ -296,6 +300,10 @@ export const locales: Record<Locale, LocaleContent> = {
       responseTimeValue: "1 munkanapon belül",
       languagesLabel: "Nyelvek",
       languagesValue: "Magyar, Német, Angol",
+      addressLabel: "Székhely",
+      addressLine1: "Papp Róbert E.V.",
+      addressLine2: "8400 Ajka, Dobó Katica utca 102.",
+      addressDisclaimer: "Székhelycím, személyes ügyfélfogadás nincs.",
     },
     footer: "Minden jog fenntartva.",
   },
@@ -479,6 +487,10 @@ export const locales: Record<Locale, LocaleContent> = {
       responseTimeValue: "Within 1 business day",
       languagesLabel: "Languages",
       languagesValue: "Hungarian, German, English",
+      addressLabel: "Registered address",
+      addressLine1: "Papp Róbert E.V.",
+      addressLine2: "8400 Ajka, Dobó Katica utca 102.",
+      addressDisclaimer: "Registered business address only — no walk-in visits.",
     },
     footer: "All rights reserved.",
   },
@@ -662,6 +674,10 @@ export const locales: Record<Locale, LocaleContent> = {
       responseTimeValue: "Innerhalb eines Werktags",
       languagesLabel: "Sprachen",
       languagesValue: "Ungarisch, Deutsch, Englisch",
+      addressLabel: "Geschäftsadresse",
+      addressLine1: "Papp Róbert E.V.",
+      addressLine2: "8400 Ajka, Dobó Katica utca 102.",
+      addressDisclaimer: "Nur Geschäftsadresse — kein Besucherempfang.",
     },
     footer: "Alle Rechte vorbehalten.",
   },

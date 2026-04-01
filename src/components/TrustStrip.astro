@@ -1,0 +1,29 @@
+---
+import type { Locale } from "../data/site";
+import { locales, trustLogos } from "../data/site";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = locales[lang];
+---
+
+<div class="trust-strip">
+  <div class="shell">
+    <div class="trust-strip-stats">
+      {content.trustStrip.stats.map((stat) => (
+        <div class="trust-stat">
+          <strong>{stat.value}</strong>
+          <span>{stat.label}</span>
+        </div>
+      ))}
+    </div>
+    <div class="trust-strip-logos">
+      {trustLogos.map((name) => (
+        <span class="trust-logo-name">{name}</span>
+      ))}
+    </div>
+  </div>
+</div>

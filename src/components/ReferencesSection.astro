@@ -9,10 +9,9 @@ interface Props {
 const { lang } = Astro.props;
 const content = locales[lang];
 
-const allFeatured = [
-  ...content.references.itemsGermany,
-  ...content.references.itemsHungary,
-].filter((r) => r.featured);
+const allFeatured = content.references.groups
+  .flatMap((g) => g.items)
+  .filter((r) => r.featured);
 ---
 
 <section class="section references" id="references">
@@ -29,29 +28,20 @@ const allFeatured = [
       ))}
     </div>
 
-    <div class="reference-layout">
-      <article class="reference-panel">
-        <h3>{content.references.germany}</h3>
-        <ul class="reference-list">
-          {content.references.itemsGermany.map((item) => (
-            <li>
-              <span>{item.name}</span>
-              <strong>{item.type}</strong>
-            </li>
-          ))}
-        </ul>
-      </article>
-      <article class="reference-panel">
-        <h3>{content.references.hungary}</h3>
-        <ul class="reference-list">
-          {content.references.itemsHungary.map((item) => (
-            <li>
-              <span>{item.name}</span>
-              <strong>{item.type}</strong>
-            </li>
-          ))}
-        </ul>
-      </article>
+    <div class="reference-groups">
+      {content.references.groups.map((group) => (
+        <article class="reference-panel">
+          <h3>{group.heading}</h3>
+          <ul class="reference-list">
+            {group.items.map((item) => (
+              <li>
+                <span>{item.name}</span>
+                <strong>{item.type}</strong>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
     </div>
   </div>
 </section>

@@ -8,6 +8,17 @@ export type ReferenceItem = {
   featured?: boolean;
 };
 
+export type ReferenceGroup = {
+  heading: string;
+  items: ReferenceItem[];
+};
+
+export type ProcessStep = {
+  step: string;
+  title: string;
+  text: string;
+};
+
 export type LocaleContent = {
   lang: Locale;
   localeLabel: string;
@@ -25,9 +36,12 @@ export type LocaleContent = {
     eyebrow: string;
     title: string;
     text: string;
+    primaryCta: string;
     phoneCta: string;
-    emailCta: string;
     galleryCta: string;
+  };
+  trustStrip: {
+    stats: Array<{ value: string; label: string }>;
   };
   about: {
     title: string;
@@ -44,14 +58,16 @@ export type LocaleContent = {
     core: ServiceItem[];
     additional: ServiceItem[];
   };
+  process: {
+    title: string;
+    intro: string;
+    steps: ProcessStep[];
+  };
   references: {
     title: string;
     intro: string;
     featuredLabel: string;
-    germany: string;
-    hungary: string;
-    itemsGermany: ReferenceItem[];
-    itemsHungary: ReferenceItem[];
+    groups: ReferenceGroup[];
   };
   gallery: {
     title: string;
@@ -65,6 +81,8 @@ export type LocaleContent = {
     emailLabel: string;
     serviceAreaLabel: string;
     serviceAreaValue: string;
+    responseTimeLabel: string;
+    responseTimeValue: string;
     languagesLabel: string;
     languagesValue: string;
   };
@@ -78,6 +96,14 @@ export const contactInfo = {
   emailHref: "mailto:info@3p-kemeny.hu",
 } as const;
 
+export const trustLogos = [
+  "Mercedes",
+  "BMW",
+  "VW",
+  "Airbus",
+  "Viessmann",
+] as const;
+
 export const galleryImages = [
   "gallery-01.jpg",
   "gallery-02.jpg",
@@ -89,162 +115,196 @@ export const galleryImages = [
   "gallery-08.jpg",
 ] as const;
 
-const referenceGermany: ReferenceItem[] = [
-  { name: "Viessmann Allendorf", type: "Industrial", featured: true },
-  { name: "Mercedes Kecskemet", type: "Factory", featured: true },
-  { name: "Mercedes Sindelfingen", type: "Factory" },
-  { name: "BMW Landshut", type: "Factory", featured: true },
-  { name: "BMW Dingolfing", type: "Factory" },
-  { name: "Airbus Immenstadt", type: "Industrial", featured: true },
-  { name: "KfW Bank Frankfurt", type: "Bank", featured: true },
-  { name: "Stuttgart Kriminalpolizei", type: "Police" },
-  { name: "Tubingen Polizei", type: "Police" },
-  { name: "Karlsruhe Landespolizei", type: "Police" },
-  { name: "Bad Bergzabern Landespolizei", type: "Police" },
-  { name: "Arburg Lossburg", type: "Industrial" },
-  { name: "Freiburg Neues Rathaus", type: "Municipal" },
-  { name: "Trumpf Laser Gerlingen and Sulgen", type: "Industrial", featured: true },
-  { name: "VW plant Zwickau", type: "Factory", featured: true },
-  { name: "Rapunzel Legau", type: "Industrial" },
-  { name: "Reutlingen Hospital", type: "Healthcare" },
-  { name: "Emmendingen Hospital", type: "Healthcare" },
-];
-
-const referenceHungary: ReferenceItem[] = [
-  { name: "Dunaujvaros Malt Plant", type: "Industrial" },
-  { name: "Vajda Paper Dunaujvaros", type: "Industrial" },
-  { name: "Capital Square Budapest", type: "Commercial" },
-  { name: "Budapest Business Center", type: "Commercial" },
-  { name: "Madach Center", type: "Commercial" },
-  { name: "Blaha Center", type: "Commercial" },
-  { name: "Oxigen Wellness", type: "Wellness" },
-  { name: "Kometa Kaposvar", type: "Industrial" },
-  { name: "Szombathely Police", type: "Police" },
-  { name: "Kalocsa Hospital", type: "Healthcare" },
-  { name: "Tapioszele Transformer Plant", type: "Industrial" },
-  { name: "Egis Pharmaceutical Budapest", type: "Industrial", featured: true },
-];
-
 export const locales: Record<Locale, LocaleContent> = {
   hu: {
     lang: "hu",
     localeLabel: "Magyar",
-    pageTitle: "3P Kemeny | Kemenyszereles es kemenyepites Ajka es kornyeken",
+    pageTitle: "3P Kémény | Kéményszerelés és kéménybélelés — Ajka",
     metaDescription:
-      "Professzionalis kemenyszereles, beleles es ipari tapasztalat Ajka es kornyeken. Savallo rendszerek, onhordo kemenyek, nemetorszagi referenciak.",
+      "Professzionális kéményszerelés, kéménybélelés és szigetelt saválló rendszerek Ajka környékén. Több mint 15 év tapasztalat, németországi ipari projektmúlt.",
     switcherLabel: "Nyelv",
     nav: {
-      about: "Rolunk",
-      services: "Szolgaltatasok",
-      references: "Referenciak",
-      gallery: "Galeria",
+      about: "Rólunk",
+      services: "Szolgáltatások",
+      references: "Referenciák",
+      gallery: "Galéria",
       contact: "Kapcsolat",
     },
     hero: {
-      eyebrow: "3P Kemeny • Ajka es kornyeke",
-      title: "Kemenyrendszerek, amikre hosszu tavon is szamithat",
-      text: "Ipari es lakossagi kemenyepites, beleles es korszerusites — 15 ev tapasztalattal, nemetorszagi projekthatterrel.",
-      phoneCta: "Hivjon most",
-      emailCta: "Irjon emailt",
-      galleryCta: "Munkaink",
+      eyebrow: "3P Kémény • Ajka és környéke",
+      title: "Időtálló kéményrendszerek",
+      text: "Ipari és lakossági kéményépítés, kéménybélelés és korszerűsítés — több mint 15 év gyakorlati tapasztalattal és németországi projektmúlttal.",
+      primaryCta: "Ajánlatkérés",
+      phoneCta: "Hívjon most",
+      galleryCta: "Projektek megtekintése",
+    },
+    trustStrip: {
+      stats: [
+        { value: "15+", label: "év tapasztalat" },
+        { value: "10", label: "év németországi projekteken" },
+        { value: "30+", label: "nagyobb befejezett referencia" },
+        { value: "✓", label: "Lakossági, ipari és kereskedelmi" },
+      ],
     },
     about: {
-      title: "Rolunk",
-      lead: "Papp Robert vagyok, a 3P Kemeny alapitoja. Kemenyszerelessel foglalkozom tobb mint 15 eve.",
+      title: "Rólunk",
+      lead: "Papp Róbert vagyok, a 3P Kémény alapítója. Több mint 15 éve foglalkozom kéményépítéssel és -béleléssel — és a mai napig minden munkát személyesen végzek el.",
       body: [
-        "Palyamat Jeremias rendszerekkel kezdtem, ami eros muszaki alapot adott a savallo es szigetelt kemenyrendszerek kivitelezesehez.",
-        "Az elso 10 evemet Nemetorszagban toltottem, ahol csaladi hazaktol nagy ipari rendszerekig szereztam tapasztalatot. Ma Ajkan es kornyeken dolgozom egyeni vallalkozokent, kozvetlen egyeztetessel es szemelyes felelossegvalallassal.",
+        "A Jeremias rendszerekkel kezdtem, ami stabil technikai alapot biztosított a saválló és szigetelt kémények területén.",
+        "Az első tíz évben Németország-szerte dolgoztam — a családi házaktól kezdve a gyári méretű kivitelezésekig olyan ügyfeleknek, mint a Mercedes, a BMW és az Airbus. Ez a tapasztalat határozza meg a mai munkastílusomat: precíz kivitelezés, tiszta megoldások és közvetlen kommunikáció minden ügyféllel.",
+        "Ma független szakemberként dolgozom Ajka környékén. Nincsenek közvetítők — csak egyetlen kapcsolattartó a felméréstől az átadásig.",
       ],
       trustItems: [
-        "15+ ev szerelesi tapasztalat",
-        "10 ev nemetorszagi projektmunka",
-        "Jeremias rendszereken szerzett alap",
-        "Ajka es kornyeke gyors elerhetoseggel",
+        "Több mint 15 év szerelési tapasztalat",
+        "10 év németországi ipari és kereskedelmi projekteken",
+        "Jeremias saválló rendszerekre kiképezve",
+        "Gyors rendelkezésre állás Ajkán és környékén",
+        "Közvetlen, személyes kommunikáció minden munkánál",
       ],
       highlights: [
-        { label: "Mukodesi terulet", value: "Ajka es kornyeke" },
-        { label: "Szakterulet", value: "Savallo es szigetelt kemenyrendszerek" },
-        { label: "Projektek", value: "Lakoepulet, ipari, kereskedelmi" },
+        { label: "Szolgáltatási terület", value: "Ajka és a környező települések" },
+        { label: "Fő szakterület", value: "Saválló és szigetelt rendszerek" },
+        { label: "Projektek", value: "Lakossági, ipari, kereskedelmi" },
       ],
     },
     services: {
-      title: "Szolgaltatasok",
-      intro: "Komplex kemenyes megoldasokat vegzunk felmerestol a kivitelezesig.",
-      coreLabel: "Fo szolgaltatasok",
-      additionalLabel: "Tovabbi munkak",
+      title: "Szolgáltatások",
+      intro: "Teljes körű kéménymegoldások — a helyszíni felméréstől a kész kivitelezésig.",
+      coreLabel: "Fő szolgáltatások",
+      additionalLabel: "További szolgáltatások",
       core: [
         {
-          title: "Kemeny beleles",
-          text: "Regi belesek csereje, savallo rendszer kiepitese es korszerusites megbizhato anyagokkal.",
+          title: "Kéménybélelés",
+          text: "Régi vagy sérült béléscsövek eltávolítása és cseréje tartós saválló rendszerekre.",
         },
         {
-          title: "Kulso szigetelt kemeny",
-          text: "Nemesacel, kulso fali kialakitas stabil rogzitessel es esztetikus megjelenessel.",
+          title: "Külső szigetelt kémények",
+          text: "Falon kívüli saválló rendszerek biztonságos rögzítéssel, megfelelő szigeteléssel és esztétikus kivitelezéssel.",
         },
         {
-          title: "Onhordo kemenyek",
-          text: "Onhordo szerkezetek allitasa es szerelese ipari szemleletu kivitelezessel.",
+          title: "Önhordó kémények",
+          text: "Szabadon álló kéményszerkezetek ipari szabványok szerinti megépítése.",
         },
       ],
       additional: [
         {
-          title: "Keramia beles csere",
-          text: "Serult keramia elemek bontasa es korszeru savallo rendszerre valo atallitas.",
+          title: "Kerámia bélés cseréje",
+          text: "Repedt vagy elhasználódott kerámia béléscsövek eltávolítása, átalakítás modern saválló megoldásokra.",
         },
         {
-          title: "Bekoto vezetek csere",
-          text: "Biztonsagos csatlakozasok kialakitasa uj vagy korszerusitett futesi rendszerekhez.",
+          title: "Bekötővezeték cseréje",
+          text: "Füstcsövek és bekötővezetékek biztonságos cseréje új vagy korszerűsített fűtőberendezésekhez.",
         },
         {
-          title: "Kandallo bekotes",
-          text: "Kandallokhoz igazodott bekotesek, funkcio es megjelenes egyensulyaval.",
+          title: "Kandalló bekötés",
+          text: "Kandallók és kályhák bekötése a megfelelő huzat, biztonság és esztétika figyelembevételével.",
         },
         {
-          title: "Kemenymagasitas",
-          text: "Huzasjavitas es szabalyos kivezetes kialakitasa a helyi adottsagokhoz igazodva.",
+          title: "Kéménymagasítás",
+          text: "Kémények magasítása a huzat javítása vagy a jelenlegi műszaki előírások teljesítése érdekében.",
         },
         {
-          title: "Kemenyfej visszabontas",
-          text: "Serult vagy atalakitasra szorulo kemenyfejek biztonsagos visszabontasa.",
+          title: "Kéményfej visszabontás",
+          text: "Sérült kéményfejek szakszerű visszabontása vagy újraépítése.",
         },
         {
           title: "Koncentrikus rendszerek",
-          text: "Modern futesi rendszerekhez illesztett koncentrikus kemenyek telepitese.",
+          text: "Koncentrikus kéményrendszerek kiépítése kondenzációs kazánokhoz és modern fűtőberendezésekhez.",
         },
       ],
     },
+    process: {
+      title: "Hogyan dolgozunk",
+      intro: "Minden projekt egy átlátható folyamatot követ — nincsenek meglepetések.",
+      steps: [
+        { step: "1", title: "Felmérés", text: "Helyszíni kiszállás a meglévő kémény állapotának felmérésére és az igények egyeztetésére." },
+        { step: "2", title: "Árajánlat", text: "Írásos árajánlat világosan meghatározott munkakörrel, anyagokkal és határidővel." },
+        { step: "3", title: "Kivitelezés", text: "Szakszerű kivitelezés — tiszta munkaterület, dokumentált munka, nincsenek elvarratlan szálak." },
+        { step: "4", title: "Átadás", text: "Az elkészült rendszer bemutatása és a szükséges dokumentáció átadása." },
+      ],
+    },
     references: {
-      title: "Referenciak",
-      intro: "Hazai es nemzetkozi projektjeink egyarant igazoljak, hogy a csaladi hazas kivitelezestol a nagyvallalati megbizasokig megbizhato partnerek vagyunk.",
-      featuredLabel: "Kiemelt megbizok",
-      germany: "Nemetorszagi projektek",
-      hungary: "Magyarorszagi projektek",
-      itemsGermany: referenceGermany,
-      itemsHungary: referenceHungary,
+      title: "Referenciák",
+      intro: "A családi házaktól a gyárcsarnokokig — állandó színvonal minden projektnél.",
+      featuredLabel: "Kiemelt ügyfelek",
+      groups: [
+        {
+          heading: "Németország — Járműipar és ipar",
+          items: [
+            { name: "Mercedes Kecskemét", type: "Gyár", featured: true },
+            { name: "Mercedes Sindelfingen", type: "Gyár" },
+            { name: "BMW Landshut", type: "Gyár", featured: true },
+            { name: "BMW Dingolfing", type: "Gyár" },
+            { name: "VW Zwickau", type: "Gyár", featured: true },
+            { name: "Airbus Immenstadt", type: "Ipari", featured: true },
+            { name: "Viessmann Allendorf", type: "Ipari", featured: true },
+            { name: "Trumpf Laser Gerlingen & Sulgen", type: "Ipari" },
+            { name: "Arburg Loßburg", type: "Ipari" },
+            { name: "Rapunzel Legau", type: "Ipari" },
+          ],
+        },
+        {
+          heading: "Németország — Közintézmények, önkormányzatok és egészségügy",
+          items: [
+            { name: "KfW Bank Frankfurt", type: "Bank", featured: true },
+            { name: "Freiburg Neues Rathaus", type: "Önkormányzati" },
+            { name: "Stuttgart Kriminalpolizei", type: "Rendőrség" },
+            { name: "Tübingen Polizei", type: "Rendőrség" },
+            { name: "Karlsruhe Landespolizei", type: "Rendőrség" },
+            { name: "Bad Bergzabern Landespolizei", type: "Rendőrség" },
+            { name: "Reutlingeni Kórház", type: "Egészségügy" },
+            { name: "Emmendingeni Kórház", type: "Egészségügy" },
+          ],
+        },
+        {
+          heading: "Magyarország — Ipari",
+          items: [
+            { name: "Dunaújváros Malátagyár", type: "Ipari" },
+            { name: "Vajda Papír Dunaújváros", type: "Ipari" },
+            { name: "Kométa Kaposvár", type: "Ipari" },
+            { name: "Tápiószele Transzformátorgyár", type: "Ipari" },
+            { name: "Egis Gyógyszergyár Budapest", type: "Ipari", featured: true },
+          ],
+        },
+        {
+          heading: "Magyarország — Kereskedelmi és közintézmények",
+          items: [
+            { name: "Capital Square Budapest", type: "Kereskedelmi" },
+            { name: "Budapest Business Center", type: "Kereskedelmi" },
+            { name: "Madách Center", type: "Kereskedelmi" },
+            { name: "Blaha Center", type: "Kereskedelmi" },
+            { name: "Oxigén Wellness", type: "Wellness" },
+            { name: "Szombathelyi Rendőrség", type: "Rendőrség" },
+            { name: "Kalocsai Kórház", type: "Egészségügy" },
+          ],
+        },
+      ],
     },
     gallery: {
-      title: "Galeria",
-      intro: "Valogatott helyszini fotok korabbi munkainkbol.",
-      cta: "Teljes meret megnyitasa",
+      title: "Galéria",
+      intro: "Válogatott helyszíni fotók korábbi projektjeinkből.",
+      cta: "Teljes méret megnyitása",
     },
     contact: {
       title: "Kapcsolat",
-      intro: "Arajanalatert vagy helyszini egyezteteshez hivjon vagy irjon bizalommal.",
+      intro: "Árajánlatért vagy helyszíni konzultációért hívjon vagy írjon — általában egy munkanapon belül válaszolunk.",
       phoneLabel: "Telefon",
-      emailLabel: "Email",
-      serviceAreaLabel: "Tevekenysegi terulet",
-      serviceAreaValue: "Ajka es kornyeke",
+      emailLabel: "E-mail",
+      serviceAreaLabel: "Szolgáltatási terület",
+      serviceAreaValue: "Ajka és környéke",
+      responseTimeLabel: "Válaszidő",
+      responseTimeValue: "1 munkanapon belül",
       languagesLabel: "Nyelvek",
-      languagesValue: "Magyar, nemet, angol",
+      languagesValue: "Magyar, Német, Angol",
     },
     footer: "Minden jog fenntartva.",
   },
   en: {
     lang: "en",
     localeLabel: "English",
-    pageTitle: "3P Kemeny | Chimney Installation and Lining — Ajka, Hungary",
+    pageTitle: "3P Kémény | Chimney Installation and Lining — Ajka, Hungary",
     metaDescription:
-      "Professional chimney installation, relining and insulated systems near Ajka. Stainless steel, self-supporting chimneys, German project references.",
+      "Professional chimney installation, relining and insulated stainless steel systems near Ajka. 15+ years of experience, German industrial project background.",
     switcherLabel: "Language",
     nav: {
       about: "About",
@@ -254,86 +314,154 @@ export const locales: Record<Locale, LocaleContent> = {
       contact: "Contact",
     },
     hero: {
-      eyebrow: "3P Kemeny • Ajka region, Hungary",
+      eyebrow: "3P Kémény • Ajka region, Hungary",
       title: "Chimney systems built to last",
-      text: "Industrial and residential chimney construction, relining and modernization — 15 years of experience with a German project background.",
+      text: "Industrial and residential chimney construction, relining and modernization — with 15+ years of hands-on experience and a German project background.",
+      primaryCta: "Request a quote",
       phoneCta: "Call now",
-      emailCta: "Send email",
       galleryCta: "View projects",
+    },
+    trustStrip: {
+      stats: [
+        { value: "15+", label: "years of experience" },
+        { value: "10", label: "years on German projects" },
+        { value: "30+", label: "major completed references" },
+        { value: "✓", label: "Residential, industrial & commercial" },
+      ],
     },
     about: {
       title: "About",
-      lead: "I'm Robert Papp, founder of 3P Kemeny. I've been working in chimney installation for over 15 years.",
+      lead: "I'm Róbert Papp, founder of 3P Kémény. I've spent over 15 years building and lining chimneys — and I still do every job personally.",
       body: [
-        "I started my career with Jeremias systems, which gave me a strong technical foundation for stainless steel and insulated chimney work.",
-        "I spent my first 10 years working in Germany, gaining experience from family houses to large industrial systems. Today I work as an independent specialist around Ajka, with direct communication and personal accountability on every project.",
+        "I started with Jeremias systems, which gave me a solid technical foundation in stainless steel and insulated chimney work.",
+        "For my first ten years I worked across Germany — everything from single-family houses to factory-scale installations for clients like Mercedes, BMW and Airbus. That experience shaped how I work today: precise execution, clean detailing, and direct communication with every client.",
+        "Today I operate as an independent specialist based near Ajka. No middlemen — just one point of contact from assessment to handover.",
       ],
       trustItems: [
         "15+ years of installation experience",
-        "10 years on German projects",
-        "Foundation with Jeremias systems",
+        "10 years on German industrial and commercial projects",
+        "Trained on Jeremias stainless steel systems",
         "Fast availability in the Ajka region",
+        "Direct, personal communication on every job",
       ],
       highlights: [
-        { label: "Service area", value: "Ajka and nearby settlements" },
+        { label: "Service area", value: "Ajka and surrounding settlements" },
         { label: "Core expertise", value: "Stainless steel and insulated systems" },
-        { label: "Projects", value: "Residential, industrial, commercial" },
+        { label: "Project types", value: "Residential, industrial, commercial" },
       ],
     },
     services: {
       title: "Services",
-      intro: "Complete chimney solutions from assessment to finished installation.",
+      intro: "Complete chimney solutions — from on-site assessment to finished installation.",
       coreLabel: "Core services",
-      additionalLabel: "Additional work",
+      additionalLabel: "Additional services",
       core: [
         {
           title: "Chimney relining",
-          text: "Replacement of old liners and installation of durable stainless steel systems.",
+          text: "Removal of old or damaged liners and replacement with durable stainless steel systems.",
         },
         {
           title: "External insulated chimneys",
-          text: "Stainless steel exterior wall systems with stable fixing and clean detailing.",
+          text: "Wall-mounted stainless steel systems with secure fixing, proper insulation and clean finishing.",
         },
         {
           title: "Self-supporting chimneys",
-          text: "Assembly of self-supporting structures with an industrial execution standard.",
+          text: "Freestanding chimney structures built to industrial standards.",
         },
       ],
       additional: [
         {
           title: "Ceramic liner replacement",
-          text: "Removal of damaged ceramic liners and conversion to modern acid-resistant solutions.",
+          text: "Removal of cracked or deteriorated ceramic liners, conversion to modern acid-resistant solutions.",
         },
         {
           title: "Connector pipe replacement",
-          text: "Safe connection upgrades for new or modernized heating systems.",
+          text: "Safe replacement of connecting flue pipes for new or upgraded heating equipment.",
         },
         {
           title: "Fireplace connection",
-          text: "Fireplace connections balanced for performance, safety and appearance.",
+          text: "Hookup of fireplaces and stoves, balanced for draft, safety and appearance.",
         },
         {
           title: "Chimney extension",
-          text: "Height extension to improve draft and meet technical requirements.",
+          text: "Height extensions to improve draft performance or meet current technical requirements.",
         },
         {
-          title: "Chimney head dismantling",
-          text: "Controlled removal of damaged or unsuitable chimney heads.",
+          title: "Chimney head work",
+          text: "Controlled dismantling or reconstruction of damaged chimney heads.",
         },
         {
           title: "Concentric systems",
-          text: "Installation of concentric chimney systems for modern heating equipment.",
+          text: "Installation of concentric chimney systems for condensing boilers and modern heating equipment.",
         },
+      ],
+    },
+    process: {
+      title: "How we work",
+      intro: "Every project follows a straightforward process — no surprises.",
+      steps: [
+        { step: "1", title: "Assessment", text: "On-site visit to inspect the existing chimney and discuss your requirements." },
+        { step: "2", title: "Quote", text: "Written quote with a clear scope of work, materials and timeline." },
+        { step: "3", title: "Installation", text: "Professional execution — clean site, documented work, no loose ends." },
+        { step: "4", title: "Handover", text: "Walkthrough of the completed system and any documentation you need." },
       ],
     },
     references: {
       title: "References",
-      intro: "Our project list shows a consistent standard across both residential jobs and demanding industrial work.",
-      featuredLabel: "Featured clients",
-      germany: "Projects in Germany",
-      hungary: "Projects in Hungary",
-      itemsGermany: referenceGermany,
-      itemsHungary: referenceHungary,
+      intro: "From family homes to factory floors — a consistent standard on every project.",
+      featuredLabel: "Selected clients",
+      groups: [
+        {
+          heading: "Germany — Automotive & industrial",
+          items: [
+            { name: "Mercedes Kecskemét", type: "Factory", featured: true },
+            { name: "Mercedes Sindelfingen", type: "Factory" },
+            { name: "BMW Landshut", type: "Factory", featured: true },
+            { name: "BMW Dingolfing", type: "Factory" },
+            { name: "VW Zwickau", type: "Factory", featured: true },
+            { name: "Airbus Immenstadt", type: "Industrial", featured: true },
+            { name: "Viessmann Allendorf", type: "Industrial", featured: true },
+            { name: "Trumpf Laser Gerlingen & Sulgen", type: "Industrial" },
+            { name: "Arburg Loßburg", type: "Industrial" },
+            { name: "Rapunzel Legau", type: "Industrial" },
+          ],
+        },
+        {
+          heading: "Germany — Public, municipal & healthcare",
+          items: [
+            { name: "KfW Bank Frankfurt", type: "Bank", featured: true },
+            { name: "Freiburg Neues Rathaus", type: "Municipal" },
+            { name: "Stuttgart Kriminalpolizei", type: "Police" },
+            { name: "Tübingen Polizei", type: "Police" },
+            { name: "Karlsruhe Landespolizei", type: "Police" },
+            { name: "Bad Bergzabern Landespolizei", type: "Police" },
+            { name: "Reutlingen Hospital", type: "Healthcare" },
+            { name: "Emmendingen Hospital", type: "Healthcare" },
+          ],
+        },
+        {
+          heading: "Hungary — Industrial",
+          items: [
+            { name: "Dunaújváros Malt Plant", type: "Industrial" },
+            { name: "Vajda Papír Dunaújváros", type: "Industrial" },
+            { name: "Kométa Kaposvár", type: "Industrial" },
+            { name: "Tápiószele Transformer Plant", type: "Industrial" },
+            { name: "Egis Pharmaceutical Budapest", type: "Industrial", featured: true },
+          ],
+        },
+        {
+          heading: "Hungary — Commercial & public",
+          items: [
+            { name: "Capital Square Budapest", type: "Commercial" },
+            { name: "Budapest Business Center", type: "Commercial" },
+            { name: "Madách Center", type: "Commercial" },
+            { name: "Blaha Center", type: "Commercial" },
+            { name: "Oxigén Wellness", type: "Wellness" },
+            { name: "Szombathely Police", type: "Police" },
+            { name: "Kalocsa Hospital", type: "Healthcare" },
+          ],
+        },
+      ],
     },
     gallery: {
       title: "Gallery",
@@ -342,11 +470,13 @@ export const locales: Record<Locale, LocaleContent> = {
     },
     contact: {
       title: "Contact",
-      intro: "For a quote or site consultation, call or write directly.",
+      intro: "For a quote or on-site consultation, call or write — we typically respond within one business day.",
       phoneLabel: "Phone",
       emailLabel: "Email",
       serviceAreaLabel: "Service area",
       serviceAreaValue: "Ajka and surrounding area",
+      responseTimeLabel: "Response time",
+      responseTimeValue: "Within 1 business day",
       languagesLabel: "Languages",
       languagesValue: "Hungarian, German, English",
     },
@@ -355,111 +485,181 @@ export const locales: Record<Locale, LocaleContent> = {
   de: {
     lang: "de",
     localeLabel: "Deutsch",
-    pageTitle: "3P Kemeny | Schornsteinmontage und Sanierung in Ajka, Ungarn",
+    pageTitle: "3P Kémény | Schornsteinmontage und Sanierung — Ajka, Ungarn",
     metaDescription:
-      "Fachgerechte Schornsteinmontage, Sanierung und Edelstahlsysteme in Ajka und Umgebung. Langjahrige Erfahrung aus deutschen Industrieprojekten.",
+      "Fachgerechte Schornsteinmontage, Sanierung und gedämmte Edelstahlsysteme bei Ajka. Über 15 Jahre Erfahrung, deutscher Industrie-Projekthintergrund.",
     switcherLabel: "Sprache",
     nav: {
-      about: "Unternehmen",
+      about: "Über uns",
       services: "Leistungen",
       references: "Referenzen",
       gallery: "Galerie",
       contact: "Kontakt",
     },
     hero: {
-      eyebrow: "3P Kemeny • Region Ajka, Ungarn",
-      title: "Schornsteinsysteme, auf die Sie langfristig zahlen konnen",
-      text: "Industrie- und Wohnbau-Schornsteinbau, Sanierung und Modernisierung — 15 Jahre Erfahrung mit deutschem Projekthintergrund.",
+      eyebrow: "3P Kémény • Region Ajka, Ungarn",
+      title: "Schornsteinsysteme, auf die Sie langfristig zählen können",
+      text: "Industrie- und Wohnbau-Schornsteinbau, Sanierung und Modernisierung — mit über 15 Jahren Praxiserfahrung und deutschem Projekthintergrund.",
+      primaryCta: "Angebot anfordern",
       phoneCta: "Jetzt anrufen",
-      emailCta: "E-Mail senden",
       galleryCta: "Projekte ansehen",
     },
+    trustStrip: {
+      stats: [
+        { value: "15+", label: "Jahre Erfahrung" },
+        { value: "10", label: "Jahre auf deutschen Projekten" },
+        { value: "30+", label: "abgeschlossene Großprojekte" },
+        { value: "✓", label: "Wohnbau, Industrie & Gewerbe" },
+      ],
+    },
     about: {
-      title: "Unternehmen",
-      lead: "Ich bin Robert Papp, Grunder von 3P Kemeny. Seit uber 15 Jahren bin ich im Schornsteinbau tatig.",
+      title: "Über uns",
+      lead: "Ich bin Róbert Papp, Gründer von 3P Kémény. Seit über 15 Jahren baue und saniere ich Schornsteine — und führe bis heute jedes Projekt persönlich aus.",
       body: [
-        "Meine Laufbahn begann mit Jeremias Systemen, die mir eine solide technische Grundlage fur Edelstahl- und gedammte Schornsteinarbeiten gaben.",
-        "Die ersten 10 Jahre war ich in Deutschland tatig, von Einfamilienhausern bis zu grossen Industrieanlagen. Heute arbeite ich als eigenstandiger Fachbetrieb in der Region Ajka — mit direkter Kommunikation und personlicher Verantwortung fur jedes Projekt.",
+        "Meine Laufbahn begann mit Jeremias-Systemen, die mir eine solide technische Grundlage für Edelstahl- und gedämmte Schornsteinarbeiten gaben.",
+        "Die ersten zehn Jahre war ich in Deutschland tätig — von Einfamilienhäusern bis hin zu Großprojekten für Kunden wie Mercedes, BMW und Airbus. Diese Erfahrung prägt meine heutige Arbeitsweise: präzise Ausführung, saubere Detaillösungen und direkte Kommunikation mit jedem Auftraggeber.",
+        "Heute arbeite ich als eigenständiger Fachbetrieb in der Region Ajka. Keine Zwischenhändler — nur ein einziger Ansprechpartner von der Bestandsaufnahme bis zur Übergabe.",
       ],
       trustItems: [
-        "15+ Jahre Montageerfahrung",
-        "10 Jahre Projekte in Deutschland",
-        "Fachliche Basis mit Jeremias Systemen",
-        "Schnelle Verfugbarkeit in der Region Ajka",
+        "Über 15 Jahre Montageerfahrung",
+        "10 Jahre auf deutschen Industrie- und Gewerbeprojekten",
+        "Ausbildung an Jeremias-Edelstahlsystemen",
+        "Schnelle Verfügbarkeit in der Region Ajka",
+        "Direkte, persönliche Kommunikation bei jedem Projekt",
       ],
       highlights: [
-        { label: "Einsatzgebiet", value: "Ajka und umliegende Orte" },
-        { label: "Kernkompetenz", value: "Edelstahl- und gedammte Systeme" },
+        { label: "Einsatzgebiet", value: "Ajka und umliegende Ortschaften" },
+        { label: "Kernkompetenz", value: "Edelstahl- und gedämmte Systeme" },
         { label: "Projektarten", value: "Wohnbau, Industrie, Gewerbe" },
       ],
     },
     services: {
       title: "Leistungen",
-      intro: "Komplette Schornsteinlosungen von der Bestandsaufnahme bis zur fertigen Ausfuhrung.",
+      intro: "Komplette Schornsteinlösungen — von der Bestandsaufnahme vor Ort bis zur fertigen Ausführung.",
       coreLabel: "Kernleistungen",
-      additionalLabel: "Weitere Arbeiten",
+      additionalLabel: "Weitere Leistungen",
       core: [
         {
           title: "Schornsteinsanierung",
-          text: "Austausch alter Auskleidungen und Einbau langlebiger Edelstahlsysteme.",
+          text: "Ausbau alter oder beschädigter Auskleidungen und Einbau langlebiger Edelstahlsysteme.",
         },
         {
-          title: "Aussenschornsteine mit Dammung",
-          text: "Edelstahl-Aussensysteme mit stabiler Befestigung und sauberer Detaillierung.",
+          title: "Außenschornsteine mit Dämmung",
+          text: "Wandmontierte Edelstahlsysteme mit stabiler Befestigung, fachgerechter Dämmung und sauberer Detaillierung.",
         },
         {
           title: "Selbsttragende Schornsteine",
-          text: "Montage selbsttragender Konstruktionen mit industriellem Qualitatsanspruch.",
+          text: "Montage freistehender Schornsteinkonstruktionen nach industriellem Qualitätsstandard.",
         },
       ],
       additional: [
         {
           title: "Keramik-Auskleidung tauschen",
-          text: "Ruckbau beschadigter Keramiksysteme und Umrustung auf moderne saurebestandige Losungen.",
+          text: "Rückbau gerissener oder verschlissener Keramikauskleidungen, Umrüstung auf moderne säurebeständige Lösungen.",
         },
         {
-          title: "Anschlussleitung tauschen",
-          text: "Sichere Anschlusse fur neue oder modernisierte Heizsysteme.",
+          title: "Verbindungsleitung tauschen",
+          text: "Sicherer Austausch von Rauchgasrohren und Verbindungsleitungen für neue oder modernisierte Heizanlagen.",
         },
         {
           title: "Kaminanschluss",
-          text: "Passgenaue Kaminanschlusse mit Fokus auf Funktion, Sicherheit und Optik.",
+          text: "Fachgerechter Anschluss von Kaminen und Öfen — abgestimmt auf Zugverhalten, Sicherheit und Optik.",
         },
         {
-          title: "Schornsteinerhohung",
-          text: "Erhohung zur Zugverbesserung und technischen Anpassung vor Ort.",
+          title: "Schornsteinerhöhung",
+          text: "Höhenanpassung zur Verbesserung des Zugverhaltens oder Erfüllung aktueller technischer Vorschriften.",
         },
         {
-          title: "Ruckbau Schornsteinkopf",
-          text: "Kontrollierter Ruckbau beschadigter oder ungeeigneter Schornsteinkopfe.",
+          title: "Schornsteinkopf-Arbeiten",
+          text: "Kontrollierter Rückbau oder Neuaufbau beschädigter Schornsteinköpfe.",
         },
         {
           title: "Konzentrische Systeme",
-          text: "Montage konzentrischer Schornsteinsysteme fur moderne Heiztechnik.",
+          text: "Montage konzentrischer Schornsteinsysteme für Brennwerttechnik und moderne Heizanlagen.",
         },
+      ],
+    },
+    process: {
+      title: "Arbeitsweise",
+      intro: "Jedes Projekt folgt einem klaren Ablauf — ohne Überraschungen.",
+      steps: [
+        { step: "1", title: "Bestandsaufnahme", text: "Vor-Ort-Termin zur Begutachtung des bestehenden Schornsteins und Besprechung Ihrer Anforderungen." },
+        { step: "2", title: "Angebot", text: "Schriftliches Angebot mit klar definiertem Leistungsumfang, Materialien und Zeitplan." },
+        { step: "3", title: "Ausführung", text: "Fachgerechte Montage — saubere Baustelle, dokumentierte Arbeit, keine offenen Punkte." },
+        { step: "4", title: "Übergabe", text: "Besichtigung der fertiggestellten Anlage und Aushändigung aller erforderlichen Unterlagen." },
       ],
     },
     references: {
       title: "Referenzen",
-      intro: "Unsere Referenzen belegen denselben Qualitatsanspruch bei Wohnprojekten wie bei anspruchsvollen Industrieauftragen.",
-      featuredLabel: "Ausgewahlte Auftraggeber",
-      germany: "Projekte in Deutschland",
-      hungary: "Projekte in Ungarn",
-      itemsGermany: referenceGermany,
-      itemsHungary: referenceHungary,
+      intro: "Vom Einfamilienhaus bis zur Werkshalle — gleichbleibender Qualitätsanspruch bei jedem Projekt.",
+      featuredLabel: "Ausgewählte Auftraggeber",
+      groups: [
+        {
+          heading: "Deutschland — Automobil & Industrie",
+          items: [
+            { name: "Mercedes Kecskemét", type: "Werk", featured: true },
+            { name: "Mercedes Sindelfingen", type: "Werk" },
+            { name: "BMW Landshut", type: "Werk", featured: true },
+            { name: "BMW Dingolfing", type: "Werk" },
+            { name: "VW Zwickau", type: "Werk", featured: true },
+            { name: "Airbus Immenstadt", type: "Industrie", featured: true },
+            { name: "Viessmann Allendorf", type: "Industrie", featured: true },
+            { name: "Trumpf Laser Gerlingen & Sulgen", type: "Industrie" },
+            { name: "Arburg Loßburg", type: "Industrie" },
+            { name: "Rapunzel Legau", type: "Industrie" },
+          ],
+        },
+        {
+          heading: "Deutschland — Öffentliche Einrichtungen, Kommunen & Gesundheitswesen",
+          items: [
+            { name: "KfW Bank Frankfurt", type: "Bank", featured: true },
+            { name: "Freiburg Neues Rathaus", type: "Kommunal" },
+            { name: "Stuttgart Kriminalpolizei", type: "Polizei" },
+            { name: "Tübingen Polizei", type: "Polizei" },
+            { name: "Karlsruhe Landespolizei", type: "Polizei" },
+            { name: "Bad Bergzabern Landespolizei", type: "Polizei" },
+            { name: "Klinikum Reutlingen", type: "Gesundheitswesen" },
+            { name: "Klinikum Emmendingen", type: "Gesundheitswesen" },
+          ],
+        },
+        {
+          heading: "Ungarn — Industrie",
+          items: [
+            { name: "Malzfabrik Dunaújváros", type: "Industrie" },
+            { name: "Vajda Papír Dunaújváros", type: "Industrie" },
+            { name: "Kométa Kaposvár", type: "Industrie" },
+            { name: "Transformatorenwerk Tápiószele", type: "Industrie" },
+            { name: "Egis Pharma Budapest", type: "Industrie", featured: true },
+          ],
+        },
+        {
+          heading: "Ungarn — Gewerbe & öffentliche Einrichtungen",
+          items: [
+            { name: "Capital Square Budapest", type: "Gewerbe" },
+            { name: "Budapest Business Center", type: "Gewerbe" },
+            { name: "Madách Center", type: "Gewerbe" },
+            { name: "Blaha Center", type: "Gewerbe" },
+            { name: "Oxigén Wellness", type: "Wellness" },
+            { name: "Polizei Szombathely", type: "Polizei" },
+            { name: "Krankenhaus Kalocsa", type: "Gesundheitswesen" },
+          ],
+        },
+      ],
     },
     gallery: {
       title: "Galerie",
-      intro: "Ausgewahlte Baustellenfotos aus bisherigen Projekten.",
-      cta: "In Vollgrosse offnen",
+      intro: "Ausgewählte Baustellenfotos aus bisherigen Projekten.",
+      cta: "In Originalgröße öffnen",
     },
     contact: {
       title: "Kontakt",
-      intro: "Fur ein Angebot oder eine Ortsbesichtigung rufen Sie an oder schreiben Sie direkt.",
+      intro: "Für ein Angebot oder eine Vor-Ort-Besichtigung rufen Sie an oder schreiben Sie direkt — wir antworten in der Regel innerhalb eines Werktags.",
       phoneLabel: "Telefon",
       emailLabel: "E-Mail",
       serviceAreaLabel: "Einsatzgebiet",
       serviceAreaValue: "Ajka und Umgebung",
+      responseTimeLabel: "Antwortzeit",
+      responseTimeValue: "Innerhalb eines Werktags",
       languagesLabel: "Sprachen",
       languagesValue: "Ungarisch, Deutsch, Englisch",
     },

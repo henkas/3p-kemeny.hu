@@ -268,6 +268,58 @@ h1 {
   object-fit: cover;
 }
 
+/* ── Trust Strip ────────────────────────────── */
+.trust-strip {
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--line);
+  padding: 1.5rem 0;
+}
+
+.trust-strip .shell {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.trust-strip-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.trust-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.trust-stat strong {
+  font-size: 1.4rem;
+  color: var(--green);
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.trust-stat span {
+  color: var(--text-soft);
+}
+
+.trust-strip-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.trust-logo-name {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
 /* ── Sections (shared) ─────────────────────── */
 .section {
   padding: 5rem 0;
@@ -452,6 +504,51 @@ h1 {
   gap: 1rem;
 }
 
+/* ── Process ───────────────────────────────── */
+.process {
+  background: var(--bg);
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.process-step {
+  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+}
+
+.process-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.process-step h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.process-step p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
 /* ── References ────────────────────────────── */
 .references {
   background: var(--slate-bg);
@@ -489,10 +586,10 @@ h1 {
   box-shadow: var(--shadow-sm);
 }
 
-.reference-layout {
+.reference-groups {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .reference-panel {
@@ -693,8 +790,12 @@ h1 {
   .hero-grid,
   .about-grid,
   .contact-layout,
-  .reference-layout {
+  .reference-groups {
     grid-template-columns: 1fr;
+  }
+
+  .process-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .header-inner {
@@ -737,8 +838,13 @@ h1 {
   .core-services,
   .additional-services,
   .highlight-grid,
-  .trust-list {
+  .trust-list,
+  .process-grid {
     grid-template-columns: 1fr;
+  }
+
+  .trust-strip-stats {
+    gap: 1rem;
   }
 
   .gallery-grid {

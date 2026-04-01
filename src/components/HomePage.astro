@@ -1,8 +1,10 @@
 ---
 import type { Locale } from "../data/site";
 import HeroSection from "./HeroSection.astro";
+import TrustStrip from "./TrustStrip.astro";
 import AboutSection from "./AboutSection.astro";
 import ServicesSection from "./ServicesSection.astro";
+import ProcessSection from "./ProcessSection.astro";
 import ReferencesSection from "./ReferencesSection.astro";
 import GallerySection from "./GallerySection.astro";
 import ContactSection from "./ContactSection.astro";
@@ -15,8 +17,10 @@ const { lang } = Astro.props;
 ---
 
 <HeroSection lang={lang} />
+<TrustStrip lang={lang} />
 <AboutSection lang={lang} />
 <ServicesSection lang={lang} />
+<ProcessSection lang={lang} />
 <ReferencesSection lang={lang} />
 <GallerySection lang={lang} />
 <ContactSection lang={lang} />

@@ -229,12 +229,13 @@ h1, h2, h3, h4 {
 .hero-brand {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: flex-start;
+  gap: 0.4rem;
   margin-bottom: 1.25rem;
 }
 
 .hero-logo {
-  height: 4rem;
+  height: 5rem;
   width: auto;
   object-fit: contain;
 }

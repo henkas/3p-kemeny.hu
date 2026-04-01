@@ -327,7 +327,7 @@ h1 {
 }
 
 .trust-brand-logo {
-  height: 1.6rem;
+  height: 2.2rem;
   width: auto;
   object-fit: contain;
   opacity: 0.5;
@@ -338,6 +338,31 @@ h1 {
 .trust-brand-logo:hover {
   opacity: 0.8;
   filter: grayscale(0%);
+}
+
+.trust-logo-swap {
+  position: relative;
+  display: inline-flex;
+  height: 2.2rem;
+}
+
+.trust-logo-swap .trust-brand-logo {
+  height: 100%;
+}
+
+.trust-logo-swap .hover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  filter: none;
+}
+
+.trust-logo-swap:hover .default {
+  opacity: 0;
+}
+
+.trust-logo-swap:hover .hover {
+  opacity: 0.8;
 }
 
 /* ── Sections (shared) ─────────────────────── */

@@ -38,22 +38,44 @@ const canonicalUrl = new URL(canonicalPath, Astro.site);
         <a class="brand" href={routes[lang]}>
           <img class="brand-logo" src="/images/logo.png" alt="3P Kémény logo" width="120" height="60" />
         </a>
-        <nav class="top-nav" aria-label="Primary">
-          <a href={`${routes[lang]}#about`}>{locale.nav.about}</a>
-          <a href={`${routes[lang]}#services`}>{locale.nav.services}</a>
-          <a href={`${routes[lang]}#references`}>{locale.nav.references}</a>
-          <a href={`${routes[lang]}#gallery`}>{locale.nav.gallery}</a>
-          <a href={`${routes[lang]}#contact`}>{locale.nav.contact}</a>
-        </nav>
-        <div class="language-switcher" aria-label={locale.switcherLabel}>
-          {Object.entries(routes).map(([code, path]) => (
-            <a class:list={["lang-link", code === lang && "is-active"]} href={path}>
-              {locales[code as Locale].localeLabel}
-            </a>
-          ))}
+        <button class="hamburger" aria-label="Menu" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        <div class="nav-group">
+          <nav class="top-nav" aria-label="Primary">
+            <a href={`${routes[lang]}#about`}>{locale.nav.about}</a>
+            <a href={`${routes[lang]}#services`}>{locale.nav.services}</a>
+            <a href={`${routes[lang]}#references`}>{locale.nav.references}</a>
+            <a href={`${routes[lang]}#gallery`}>{locale.nav.gallery}</a>
+            <a href={`${routes[lang]}#contact`}>{locale.nav.contact}</a>
+          </nav>
+          <div class="language-switcher" aria-label={locale.switcherLabel}>
+            {Object.entries(routes).map(([code, path]) => (
+              <a class:list={["lang-link", code === lang && "is-active"]} href={path}>
+                {locales[code as Locale].localeLabel}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </header>
+    <script>
+      const hamburger = document.querySelector('.hamburger');
+      const navGroup = document.querySelector('.nav-group');
+      hamburger?.addEventListener('click', () => {
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+        hamburger.setAttribute('aria-expanded', String(!expanded));
+        navGroup?.classList.toggle('is-open');
+      });
+      navGroup?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger?.setAttribute('aria-expanded', 'false');
+          navGroup?.classList.remove('is-open');
+        });
+      });
+    </script>
     <main id="content">
       <slot />
     </main>
